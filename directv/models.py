@@ -28,7 +28,7 @@ class Info:
 
 
 @dataclass(frozen=True)
-class Location:
+class Client:
     """Object holding all information of receiver client location."""
 
     name: str
@@ -37,7 +37,7 @@ class Location:
     @staticmethod
     def from_dict(data: dict):
         """Return Info object from DirecTV API response."""
-        return Location(
+        return Client(
             name=data.get("locationName"),
             address=data get("clientAddr"),
         )
@@ -47,7 +47,7 @@ class Device:
     """Object holding all information of receiver."""
 
     info: Info
-    locations: List[Location] = []
+    locations: List[Client] = []
 
     def __init__(self, data: dict):
         """Initialize an empty DirecTV device class."""
