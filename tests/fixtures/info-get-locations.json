@@ -1,0 +1,12 @@
+{
+  "locations": [{ 
+    "clientAddr": "0", 
+    "locationName": "A"
+  }], 
+  "status": { 
+    "code": 200, 
+    "commandResult": 0, 
+    "msg": "OK.", 
+    "query": "/info/getLocations?callback=jsonp"
+  }
+}
