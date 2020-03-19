@@ -6,8 +6,6 @@ from aiohttp import ClientSession
 from directv import DIRECTV
 from directv.exceptions import DIRECTVConnectionError, DIRECTVError
 
-from . import load_fixture
-
 HOST = "1.2.3.4"
 PORT = 8080
 
