@@ -17,9 +17,3 @@ class DIRECTVAccessRestricted(DIRECTVError):
     """DirecTV access restricted."""
 
     pass
-
-
-class DIRECTVResponseError(DIRECTVError):
-    """DirecTV response exception."""
-
-    pass
