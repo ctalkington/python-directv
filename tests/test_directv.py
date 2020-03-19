@@ -69,7 +69,7 @@ async def test_request_port(aresponses):
     )
 
     async with ClientSession() as session:
-        ipp = IPP(
+        ipp = DIRECTV(
             host=HOST,
             port=NON_STANDARD_PORT,
             session=session,
