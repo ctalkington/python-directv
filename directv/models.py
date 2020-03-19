@@ -28,7 +28,7 @@ class Info:
 
 
 @dataclass(frozen=True)
-class Client:
+class Location:
     """Object holding all information of receiver client location."""
 
     name: str
@@ -47,7 +47,7 @@ class Device:
     """Object holding all information of receiver."""
 
     info: Info
-    locations: List[Client] = []
+    locations: List[Location] = []
 
     def __init__(self, data: dict):
         """Initialize an empty DirecTV device class."""
