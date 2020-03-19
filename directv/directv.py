@@ -170,7 +170,7 @@ class DIRECTV:
         if self._session and self._close_session:
             await self._session.close()
 
-    async def __aenter__(self) -> "IPP":
+    async def __aenter__(self) -> "DIRECTV":
         """Async enter."""
         return self
 
