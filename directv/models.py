@@ -1,7 +1,7 @@
 """Models for DirecTV."""
 
 from dataclasses import dataclass
-from typing import List, Optional, Tuple, Union
+from typing import List
 
 from .exceptions import DIRECTVError
 
