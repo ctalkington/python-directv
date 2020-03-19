@@ -9,6 +9,7 @@ import async_timeout
 from yarl import URL
 
 from .__version__ import __version__
+from .const import VALID_REMOTE_KEYS
 from .exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
 from .models import Device
 
@@ -48,6 +49,7 @@ class DIRECTV:
         uri: str = "",
         method: str = "GET",
         data: Optional[Any] = None,
+        json_data: Optional[dict] = None,
         params: Optional[Mapping[str, str]] = None,
     ) -> Any:
         """Handle a request to a receiver."""
@@ -63,16 +65,12 @@ class DIRECTV:
 
         headers = {
             "User-Agent": self.user_agent,
-            "Content-Type": "application/json",
             "Accept": "application/json, text/plain, */*",
         }
 
         if self._session is None:
             self._session = aiohttp.ClientSession()
             self._close_session = True
-
-        if data is None:
-            data = {}
 
         try:
             with async_timeout.timeout(self.request_timeout):
@@ -81,6 +79,7 @@ class DIRECTV:
                     url,
                     auth=auth,
                     data=data,
+                    json=json_data,
                     params=params,
                     headers=headers,
                 )
@@ -95,7 +94,7 @@ class DIRECTV:
 
         if response.status == 403:
             raise DIRECTVAccessRestricted(
-                "Access was restricted while communicating with receiver. Please ensure that external device access is allowed.",
+                "Access was restricted while communicating with receiver. Please ensure that external device access is allowed",
                 {},
             )
 
@@ -143,6 +142,38 @@ class DIRECTV:
 
         self._device.update_from_dict({})
         return self._device
+
+    async def remote(self, key:str, client:str = "0"):
+        """Emulate pressing a key on the remote.
+
+        Supported keys: power, poweron, poweroff, format,
+        pause, rew, replay, stop, advance, ffwd, record,
+        play, guide, active, list, exit, back, menu, info,
+        up, down, left, right, select, red, green, yellow,
+        blue, chanup, chandown, prev, 0, 1, 2, 3, 4, 5,
+        6, 7, 8, 9, dash, enter
+        """
+        if self._device is None:
+            await self.update()
+
+        if self._device is None:
+            raise DIRECTVError("Unable to communicate with receiver")
+
+        if not type(key) is str:
+            raise DIRECTVError("Remote key should be a string")
+
+        if not key.lower() in VALID_REMOTE_KEYS:
+            raise DIRECTVError(f"Remote key is invalid: {key}")
+
+
+        keypress = {
+            "key": key,
+            "hold": "keyPress",
+            "clientAddr": client,
+        }
+
+        await self._request("remote/processKey", params=keypress)
+
 
     async def close(self) -> None:
         """Close open client session."""
