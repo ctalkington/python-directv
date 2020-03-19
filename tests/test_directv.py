@@ -27,14 +27,15 @@ async def test_directv_request(aresponses):
         aresponses.Response(
             status=200,
             headers={"Content-Type": "application/json"},
-            text='{"status": "ok"}',
+            text='{"status": {"code": 200, "commandResult": 0}}',
         ),
     )
 
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
         response = await dtv._request("/info/getVersion")
-        assert response["status-code"] == 0
+        assert response["status"]["code"] == 200
+        assert response["status"]["commandResult"] == 0
 
 
 @pytest.mark.asyncio
@@ -47,13 +48,15 @@ async def test_internal_session(aresponses):
         aresponses.Response(
             status=200,
             headers={"Content-Type": "application/json"},
-            text='{"status": "ok"}',
+            text='{"status": {"code": 200, "commandResult": 0}}',
         ),
     )
 
     async with DIRECTV(HOST) as dtv:
         response = await dtv._request("/info/getVersion")
-        assert response["status-code"] == 0
+        assert response["status"]["code"] == 200
+        assert response["status"]["commandResult"] == 0
+
 
 
 @pytest.mark.asyncio
@@ -66,14 +69,15 @@ async def test_request_port(aresponses):
         aresponses.Response(
             status=200,
             headers={"Content-Type": "application/json"},
-            text='{"status": "ok"}',
+            text='{"status": {"code": 200, "commandResult": 0}}',
         ),
     )
 
     async with ClientSession() as session:
         dtv = DIRECTV(host=HOST, port=NON_STANDARD_PORT, session=session,)
         response = await dtv._request("/info/getVersion")
-        assert response["status-code"] == 0
+        assert response["status"]["code"] == 200
+        assert response["status"]["commandResult"] == 0
 
 
 @pytest.mark.asyncio
