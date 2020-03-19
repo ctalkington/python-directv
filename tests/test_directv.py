@@ -4,7 +4,11 @@ import asyncio
 import pytest
 from aiohttp import ClientSession
 from directv import DIRECTV
-from directv.exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
+from directv.exceptions import (
+    DIRECTVAccessRestricted,
+    DIRECTVConnectionError,
+    DIRECTVError,
+)
 
 HOST = "1.2.3.4"
 PORT = 8080
