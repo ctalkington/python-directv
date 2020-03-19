@@ -74,12 +74,7 @@ class DIRECTV:
         try:
             with async_timeout.timeout(self.request_timeout):
                 response = await self._session.request(
-                    method,
-                    url,
-                    auth=auth,
-                    data=data,
-                    params=params,
-                    headers=headers,
+                    method, url, auth=auth, data=data, params=params, headers=headers,
                 )
         except asyncio.TimeoutError as exception:
             raise DIRECTVConnectionError(
@@ -104,8 +99,7 @@ class DIRECTV:
 
             if content_type == "application/json":
                 raise DIRECTVError(
-                    f"HTTP {response.status}",
-                    json.loads(content.decode("utf8"))
+                    f"HTTP {response.status}", json.loads(content.decode("utf8"))
                 )
 
             raise DIRECTVError(
@@ -114,7 +108,7 @@ class DIRECTV:
                     "content-type": content_type,
                     "message": content.decode("utf8"),
                     "status-code": response.status,
-                }
+                },
             )
 
         if "application/json" in content_type:
@@ -133,7 +127,6 @@ class DIRECTV:
             locations = await self._request("info/getLocations")
             if locations is None:
                 raise DIRECTVError("DirecTV device returned an empty API response")
-
 
             self._device = Device({"info": info, "locations": locations})
             return self._device
