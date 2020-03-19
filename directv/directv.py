@@ -49,7 +49,6 @@ class DIRECTV:
         uri: str = "",
         method: str = "GET",
         data: Optional[Any] = None,
-        json_data: Optional[dict] = None,
         params: Optional[Mapping[str, str]] = None,
     ) -> Any:
         """Handle a request to a receiver."""
@@ -79,7 +78,6 @@ class DIRECTV:
                     url,
                     auth=auth,
                     data=data,
-                    json=json_data,
                     params=params,
                     headers=headers,
                 )
@@ -164,7 +162,6 @@ class DIRECTV:
 
         if not key.lower() in VALID_REMOTE_KEYS:
             raise DIRECTVError(f"Remote key is invalid: {key}")
-
 
         keypress = {
             "key": key,
