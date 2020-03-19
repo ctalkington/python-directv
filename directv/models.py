@@ -37,10 +37,7 @@ class Location:
     @staticmethod
     def from_dict(data: dict):
         """Return Info object from DirecTV API response."""
-        return Location(
-            name=data.get("locationName"),
-            address=data.get("clientAddr"),
-        )
+        return Location(name=data.get("locationName"),address=data.get("clientAddr"),)
 
 
 class Device:
@@ -52,16 +49,23 @@ class Device:
     def __init__(self, data: dict):
         """Initialize an empty DirecTV device class."""
         # Check if all elements are in the passed dict, else raise an Error
-        if any(
-            k not in data and data[k] is not None
-            for k in ["locations", "info"]
-        ):
-            raise DIRECTVError("DirecTV data is incomplete, cannot construct device object")
+        if any(k not in data and data[k] is not Nonefor k in ["locations", "info"]):
+            raise DIRECTVError(
+                "DirecTV data is incomplete, cannot construct device object"
+            )
         self.update_from_dict(data)
 
     def update_from_dict(self, data: dict) -> "Device":
         """Return Device object from DirecTV API response."""
         if "info" in data and data["info"]:
             self.info = Info.from_dict(data["info"])
+        
+        if "locations" in data and data["locations"]:
+            locations = [
+                Location.from_dict(location)
+                for location in data["locations"]
+            ]
+
+            self.locations = locations
 
         return self
