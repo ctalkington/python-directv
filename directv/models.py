@@ -27,6 +27,7 @@ class Info:
         )
 
 
+@dataclass(frozen=True)
 class Location:
     """Object holding all information of receiver client location."""
 
