@@ -88,7 +88,7 @@ class DIRECTV:
 
         if response.status == 403:
             raise DIRECTVAccessRestricted(
-                "Access restricted. Please ensure that external device access is allowed",
+                "Access restricted. Please ensure external device access is allowed",
                 {},
             )
 
@@ -98,7 +98,7 @@ class DIRECTV:
             content = await response.read()
             response.close()
 
-            if content_tpe == "application/json":
+            if content_type == "application/json":
                 raise DIRECTVError(
                     f"HTTP {response.status}", json.loads(content.decode("utf8"))
                 )
