@@ -9,7 +9,7 @@ import async_timeout
 from yarl import URL
 
 from .__version__ import __version__
-from .exceptions import DIRECTVConnectionError, DIRECTVError
+from .exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
 
 
 class DIRECTV:
