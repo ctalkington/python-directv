@@ -22,7 +22,7 @@ class Info:
 
         return Info(
             brand="DirecTV",
-            receiver_id="".join(receiver_id.split(),
+            receiver_id="".join(receiver_id.split()),
             version=data.get("stbSoftwareVersion", "Unknown"),
         )
 
