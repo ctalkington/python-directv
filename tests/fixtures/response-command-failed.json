@@ -1,0 +1,8 @@
+{
+  "status": {
+    "code": 500,
+    "commandResult": 1,
+    "msg": "Request conflict.",
+    "query": "/tv/tune?major=5"
+  }
+}
