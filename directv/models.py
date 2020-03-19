@@ -12,7 +12,6 @@ class Info:
 
     brand: str
     receiver_id: str
-    name: str
     version: str
 
     @staticmethod
@@ -37,7 +36,10 @@ class Location:
     @staticmethod
     def from_dict(data: dict):
         """Return Info object from DirecTV API response."""
-        return Location(name=data.get("locationName"), address=data.get("clientAddr"),)
+        return Location(
+            name=data.get("locationName", "Receiver"),
+            address=data.get("clientAddr", ""),
+        )
 
 
 class Device:
@@ -61,11 +63,7 @@ class Device:
             self.info = Info.from_dict(data["info"])
 
         if "locations" in data and data["locations"]:
-            locations = [
-                Location.from_dict(location)
-                for location in data["locations"]
-            ]
-
+            locations = [Location.from_dict(location) for location in data["locations"]]
             self.locations = locations
 
         return self
