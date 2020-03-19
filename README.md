@@ -4,7 +4,7 @@ Asynchronous Python client for DirecTV receivers using the [SHEF](http://forums.
 
 ## Aboout
 
-This package allows you to ....
+This package allows you to monitor and control a DirecTV receiver and its associated client devices.
 
 ## Installation
 
