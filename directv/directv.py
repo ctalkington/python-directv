@@ -105,14 +105,14 @@ class DIRECTV:
             if content_type == "application/json":
                 raise DIRECTVError(
                     f"HTTP {response.status}",
-                    json.loads(contents.decode("utf8"))
+                    json.loads(content.decode("utf8"))
                 )
 
             raise DIRECTVError(
                 f"HTTP {response.status}",
                 {
                     "content-type": content_type,
-                    "message": contents.decode("utf8"),
+                    "message": content.decode("utf8"),
                     "status-code": response.status,
                 }
             )
@@ -157,7 +157,7 @@ class DIRECTV:
         if self._device is None:
             raise DIRECTVError("Unable to communicate with receiver")
 
-        if not type(key) is str:
+        if not isinstance(key, str) is str:
             raise DIRECTVError("Remote key should be a string")
 
         if not key.lower() in VALID_REMOTE_KEYS:
