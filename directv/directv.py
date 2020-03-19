@@ -79,16 +79,16 @@ class DIRECTV:
                 )
         except asyncio.TimeoutError as exception:
             raise DIRECTVConnectionError(
-                "Timeout occurred while connecting to receiver."
+                "Timeout occurred while connecting to receiver"
             ) from exception
         except (aiohttp.ClientError, SocketGIAEroor) as exception:
             raise DIRECTVConnectionError(
-                "Error occurred while communicating with receiver."
+                "Error occurred while communicating with receiver"
             ) from exception
 
         if response.status == 403:
             raise DIRECTVAccessRestricted(
-                "Access was restricted while communicating with receiver. Please ensure that external device access is allowed",
+                "Access restricted. Please ensure that external device access is allowed",
                 {},
             )
 
@@ -98,7 +98,7 @@ class DIRECTV:
             content = await response.read()
             response.close()
 
-            if content_type == "application/json":
+            if content_tpe == "application/json":
                 raise DIRECTVError(
                     f"HTTP {response.status}", json.loads(content.decode("utf8"))
                 )
