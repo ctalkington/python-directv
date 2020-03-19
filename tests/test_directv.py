@@ -4,7 +4,7 @@ import asyncio
 import pytest
 from aiohttp import ClientSession
 from directv import DIRECTV
-from pyipp.exceptions import DIRECTVConnectionError, DIRECTVError
+from directv.exceptions import DIRECTVConnectionError, DIRECTVError
 
 from . import load_fixture
 
