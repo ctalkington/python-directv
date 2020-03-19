@@ -133,5 +133,5 @@ async def test_unexpected_response(aresponses):
 
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
-        with pytest.raises(IPPError):
+        with pytest.raises(DIRECTVError):
             assert await dtv.info()
