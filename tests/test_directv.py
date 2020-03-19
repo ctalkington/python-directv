@@ -4,7 +4,7 @@ import asyncio
 import pytest
 from aiohttp import ClientSession
 from directv import DIRECTV
-from directv.exceptions import DIRECTVConnectionError, DIRECTVError
+from directv.exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
 
 HOST = "1.2.3.4"
 PORT = 8080
@@ -107,6 +107,38 @@ async def test_http_error404(aresponses):
         "/info/getVersion",
         "GET",
         aresponses.Response(text="Not Found!", status=404),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        with pytest.raises(DIRECTVError):
+            assert await dtv._request("/info/getVersion")
+
+
+@pytest.mark.asyncio
+async def test_http_error403(aresponses):
+    """Test HTTP 403 response handling."""
+    aresponses.add(
+        MATCH_HOST,
+        "/tv/getTuned",
+        "GET",
+        aresponses.Response(text="Forbidden", status=403),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        with pytest.raises(DIRECTVAccessRestricted):
+            assert await dtv._request("/tv/getTuned")
+
+
+@pytest.mark.asyncio
+async def test_http_error500(aresponses):
+    """Test HTTP 500 response handling."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/getVersion",
+        "GET",
+        aresponses.Response(text="Internal Server Error", status=500),
     )
 
     async with ClientSession() as session:
