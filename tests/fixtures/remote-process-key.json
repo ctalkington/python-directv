@@ -1,10 +1,10 @@
-{ 
- "hold": "keyPress", 
- "key": "info", 
- "status": { 
- "code": 200, 
- "commandResult": 0, 
- "msg": "OK", 
- "query": "/remote/processKey?key=info&hold=keyPress" 
- } 
+{
+  "hold": "keyPress",
+  "key": "info",
+  "status": {
+    "code": 200,
+    "commandResult": 0,
+    "msg": "OK",
+    "query": "/remote/processKey?key=info&hold=keyPress"
+  }
 }
