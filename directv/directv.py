@@ -25,9 +25,7 @@ class DIRECTV:
         port: int = 8080,
         request_timeout: int = 8,
         session: aiohttp.client.ClientSession = None,
-        tls: bool = False,
         username: str = None,
-        verify_ssl: bool = False,
         user_agent: str = None,
     ) -> None:
         """Initialize connection with receiver."""
@@ -85,7 +83,6 @@ class DIRECTV:
                     data=data,
                     params=params,
                     headers=headers,
-                    ssl=self.verify_ssl,
                 )
         except asyncio.TimeoutError as exception:
             raise DIRECTVConnectionError(
