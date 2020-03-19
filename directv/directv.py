@@ -1,4 +1,4 @@
-"""Asynchronous Python client for IPP."""
+"""Asynchronous Python client for DirecTV."""
 import asyncio
 import json
 from socket import gaierror as SocketGIAEroor
