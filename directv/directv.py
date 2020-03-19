@@ -13,6 +13,7 @@ from .const import VALID_REMOTE_KEYS
 from .exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
 from .models import Device
 
+
 class DIRECTV:
     """Main class for handling connections with DirecTV servers."""
 
@@ -163,7 +164,6 @@ class DIRECTV:
         }
 
         await self._request("remote/processKey", params=keypress)
-
 
     async def close(self) -> None:
         """Close open client session."""
