@@ -31,7 +31,7 @@ async def test_directv_request(aresponses):
 
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
-        response = await dtv.info()
+        response = await dtv.update()
         assert response["status-code"] == 0
 
 
@@ -50,7 +50,7 @@ async def test_internal_session(aresponses):
     )
 
     async with DIRECTV(HOST) as dtv:
-        response = await dtv.info()
+        response = await dtv.update()
         assert response["status-code"] == 0
 
 
@@ -74,7 +74,7 @@ async def test_request_port(aresponses):
             port=NON_STANDARD_PORT,
             session=session,
         )
-        response = await dtv.info()
+        response = await dtv.update()
         assert response["status-code"] == 0
 
 
@@ -93,7 +93,7 @@ async def test_timeout(aresponses):
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session, request_timeout=1)
         with pytest.raises(DIRECTVConnectionError):
-            assert await dtv.info()
+            assert await dtv.update()
 
 
 @pytest.mark.asyncio
@@ -102,7 +102,7 @@ async def test_client_error():
     async with ClientSession() as session:
         dtv = DIRECTV("#", session=session)
         with pytest.raises(DIRECTVConnectionError):
-            assert await dtv.info()
+            assert await dtv.update()
 
 
 @pytest.mark.asyncio
@@ -118,7 +118,7 @@ async def test_http_error404(aresponses):
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
         with pytest.raises(DIRECTVError):
-            assert await dtv.info()
+            assert await dtv.update()
 
 
 @pytest.mark.asyncio
@@ -134,4 +134,4 @@ async def test_unexpected_response(aresponses):
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
         with pytest.raises(DIRECTVError):
-            assert await dtv.info()
+            assert await dtv.update()
