@@ -1,6 +1,6 @@
 # Python: DirecTV (SHEF) Client
 
-Asynchronous Python client for DirectV receivers.
+Asynchronous Python client for DirecTV receivers using the [SHEF](http://forums.solidsignal.com/docs/DTV-MD-0359-DIRECTV_SHEF_Command_Set-V1.3.C.pdf) protocol.
 
 ## Aboout
 
