@@ -37,9 +37,9 @@ class Location:
     @staticmethod
     def from_dict(data: dict):
         """Return Info object from DirecTV API response."""
-        return Client(
+        return Location(
             name=data.get("locationName"),
-            address=data get("clientAddr"),
+            address=data.get("clientAddr"),
         )
 
 
