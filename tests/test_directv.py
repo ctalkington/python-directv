@@ -69,11 +69,7 @@ async def test_request_port(aresponses):
     )
 
     async with ClientSession() as session:
-        ipp = DIRECTV(
-            host=HOST,
-            port=NON_STANDARD_PORT,
-            session=session,
-        )
+        dtv = DIRECTV(host=HOST, port=NON_STANDARD_PORT, session=session,)
         response = await dtv.update()
         assert response["status-code"] == 0
 
