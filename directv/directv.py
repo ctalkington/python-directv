@@ -10,10 +10,12 @@ from yarl import URL
 
 from .__version__ import __version__
 from .exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
-
+from .models import Device
 
 class DIRECTV:
     """Main class for handling connections with DirecTV servers."""
+
+    _device: Optional[Device] = None
 
     def __init__(
         self,
@@ -126,6 +128,24 @@ class DIRECTV:
             return data
 
         return await response.text()
+
+    async def update(self, full_update: bool = False) -> Device:
+        """Get all information about the device in a single call."""
+        if self._device is None or full_update:
+            info = await self._request("info/getVersion")
+            if info is None:
+                raise DIRECTVError("DirecTV device returned an empty API response")
+
+            locations = await self._request("info/getLocations")
+            if locations is None:
+                raise DIRECTVError("DirecTV device returned an empty API response")
+
+
+            self._device = Device({"info": info, "locations": locations})
+            return self._device
+
+        self._device.update_from_dict({})
+        return self._device
 
     async def close(self) -> None:
         """Close open client session."""
