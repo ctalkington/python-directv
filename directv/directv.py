@@ -143,7 +143,7 @@ class DIRECTV:
         self._device.update_from_dict({})
         return self._device
 
-    async def remote(self, key:str, client:str = "0"):
+    async def remote(self, key: str, client: str = "0"):
         """Emulate pressing a key on the remote.
 
         Supported keys: power, poweron, poweroff, format,
