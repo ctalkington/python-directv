@@ -59,7 +59,7 @@ class Device:
         """Return Device object from DirecTV API response."""
         if "info" in data and data["info"]:
             self.info = Info.from_dict(data["info"])
-        
+
         if "locations" in data and data["locations"]:
             locations = [
                 Location.from_dict(location)
