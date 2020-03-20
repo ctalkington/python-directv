@@ -2,6 +2,7 @@
 import pytest
 from aiohttp import ClientSession
 from directv import DIRECTV
+from directv.models import Program
 
 from . import load_fixture
 
@@ -90,3 +91,25 @@ async def test_tune(aresponses):
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
         await dtv.tune("231")
+
+
+@pytest.mark.asyncio
+async def test_tuned(aresponses):
+    """Test tuned is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/tv/getTuned",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("tv-get-tuned.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.tuned()
+
+        assert response
+        assert isinstance(response, Program)
