@@ -119,7 +119,7 @@ async def test_state_restricted_mode(aresponses):
         "/info/mode",
         "GET",
         aresponses.Response(
-            status=200,
+            status=403,
             headers={"Content-Type": "application/json"},
             text=load_fixture("info-mode-restricted.json"),
         ),
