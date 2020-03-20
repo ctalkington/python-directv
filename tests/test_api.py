@@ -51,6 +51,6 @@ async def test_update(aresponses):
         assert len(response.locations) == 2
         assert response.locations[0].name == "Host"
         assert response.locations[0].address == "0"
-        
+
         assert response.locations[1].name == "Client"
         assert response.locations[1].address == "2CA17D1CD30X"
