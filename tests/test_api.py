@@ -4,11 +4,6 @@ import asyncio
 import pytest
 from aiohttp import ClientSession
 from directv import DIRECTV
-from directv.exceptions import (
-    DIRECTVAccessRestricted,
-    DIRECTVConnectionError,
-    DIRECTVError,
-)
 
 from . Import load_fixture
 
