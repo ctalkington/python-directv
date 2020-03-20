@@ -12,7 +12,7 @@ from .__version__ import __version__
 from .const import VALID_REMOTE_KEYS
 from .exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
 from .models import Device
-from .util import parse_channel
+from .utils import parse_channel
 
 class DIRECTV:
     """Main class for handling connections with DirecTV servers."""
