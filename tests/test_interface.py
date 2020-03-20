@@ -84,7 +84,7 @@ async def test_state(aresponses):
         aresponses.Response(
             status=200,
             headers={"Content-Type": "application/json"},
-            text=load_fixture("info-state.json"),
+            text=load_fixture("info-mode.json"),
         ),
     )
 
@@ -119,7 +119,7 @@ async def test_state_standby(aresponses):
         aresponses.Response(
             status=200,
             headers={"Content-Type": "application/json"},
-            text=load_fixture("info-state-standby.json"),
+            text=load_fixture("info-mode-standby.json"),
         ),
     )
 
