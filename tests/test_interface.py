@@ -130,7 +130,7 @@ async def test_state_standby(aresponses):
         assert response
         assert isinstance(response, State)
 
-        assert state.program is None
+        assert response.program is None
 
 
 @pytest.mark.asyncio
