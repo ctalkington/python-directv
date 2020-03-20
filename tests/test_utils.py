@@ -1,0 +1,12 @@
+"""Tests for DirecTV Helpers."""
+import directv.utils
+
+
+def test_combine_channel_number() -> None:
+    """Test the merging of channel numbers."""
+    assert utils.combine_channel_number() == ""
+
+
+def test_parse_channel_number() -> None:
+    """Test the parsing of channel numbers."""
+    assert utils.parse_channel_number() == ""
