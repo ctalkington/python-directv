@@ -12,7 +12,7 @@ from .__version__ import __version__
 from .const import VALID_REMOTE_KEYS
 from .exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
 from .models import Device
-from .utils import parse_channel
+from .utils import parse_channel_number
 
 class DIRECTV:
     """Main class for handling connections with DirecTV servers."""
@@ -167,7 +167,7 @@ class DIRECTV:
 
     async def tune(channel: str, client: str = "0") -> None:
         """Change the channel on the receiver."""
-        major, minor = parse_channel(channel)
+        major, minor = parse_channel_number(channel)
 
         tune = {
             "major": major,
