@@ -13,7 +13,7 @@ MATCH_HOST = f"{HOST}:{PORT}"
 
 @pytest.mark.asyncio
 async def test_update(aresponses):
-    """Test DIRECTV response is handled correctly."""
+    """Test update is handled correctly."""
     aresponses.add(
         MATCH_HOST,
         "/info/getVersion",
@@ -56,29 +56,7 @@ async def test_update(aresponses):
 
 @pytest.mark.asyncio
 async def test_remote(aresponses):
-    """Test DIRECTV response is handled correctly."""
-    aresponses.add(
-        MATCH_HOST,
-        "/info/getVersion",
-        "GET",
-        aresponses.Response(
-            status=200,
-            headers={"Content-Type": "application/json"},
-            text=load_fixture("info-get-version.json"),
-        ),
-    )
-
-    aresponses.add(
-        MATCH_HOST,
-        "/info/getLocations",
-        "GET",
-        aresponses.Response(
-            status=200,
-            headers={"Content-Type": "application/json"},
-            text=load_fixture("info-get-locations.json"),
-        ),
-    )
-
+    """Test remote is handled correctly."""
     aresponses.add(
         MATCH_HOST,
         "/remote/processKey",
@@ -93,3 +71,22 @@ async def test_remote(aresponses):
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
         await dtv.remote("info")
+
+
+@pytest.mark.asyncio
+async def test_tune(aresponses):
+    """Test tune is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/tv/tune",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("tv-tune.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        await dtv.tune("231")
