@@ -58,7 +58,6 @@ async def test_internal_session(aresponses):
         assert response["status"]["commandResult"] == 0
 
 
-
 @pytest.mark.asyncio
 async def test_request_port(aresponses):
     """Test the DIRECTV server running on non-standard port."""
