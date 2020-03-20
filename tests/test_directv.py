@@ -107,22 +107,6 @@ async def test_client_error():
 
 
 @pytest.mark.asyncio
-async def test_http_error404(aresponses):
-    """Test HTTP 404 response handling."""
-    aresponses.add(
-        MATCH_HOST,
-        "/info/getVersion",
-        "GET",
-        aresponses.Response(text="Not Found!", status=404),
-    )
-
-    async with ClientSession() as session:
-        dtv = DIRECTV(HOST, session=session)
-        with pytest.raises(DIRECTVError):
-            assert await dtv._request("/info/getVersion")
-
-
-@pytest.mark.asyncio
 async def test_http_error403(aresponses):
     """Test HTTP 403 response handling."""
     aresponses.add(
@@ -139,13 +123,13 @@ async def test_http_error403(aresponses):
 
 
 @pytest.mark.asyncio
-async def test_http_error500(aresponses):
-    """Test HTTP 500 response handling."""
+async def test_http_error404(aresponses):
+    """Test HTTP 404 response handling."""
     aresponses.add(
         MATCH_HOST,
         "/info/getVersion",
         "GET",
-        aresponses.Response(text="Internal Server Error", status=500),
+        aresponses.Response(text="Not Found!", status=404),
     )
 
     async with ClientSession() as session:
@@ -155,13 +139,13 @@ async def test_http_error500(aresponses):
 
 
 @pytest.mark.asyncio
-async def test_unexpected_response(aresponses):
-    """Test unexpected response handling."""
+async def test_http_error500(aresponses):
+    """Test HTTP 500 response handling."""
     aresponses.add(
         MATCH_HOST,
         "/info/getVersion",
         "GET",
-        aresponses.Response(text="Surprise!", status=200),
+        aresponses.Response(text="Internal Server Error", status=500),
     )
 
     async with ClientSession() as session:
