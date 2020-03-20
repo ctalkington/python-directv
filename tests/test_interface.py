@@ -121,6 +121,43 @@ async def test_state_standby(aresponses):
         aresponses.Response(
             status=200,
             headers={"Content-Type": "application/json"},
+            text=load_fixture("info-mode.json"),
+        ),
+    )
+
+    aresponses.add(
+        MATCH_HOST,
+        "/tv/getTuned",
+        "GET",
+        aresponses.Response(
+            status=403,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("tv-get-tuned-restricted.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.state()
+
+        assert response
+        assert isinstance(response, State)
+        assert response.available
+        assert not response.standby
+
+        assert response.program is None
+
+
+@pytest.mark.asyncio
+async def test_state_standby(aresponses):
+    """Test restricted state is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/mode",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
             text=load_fixture("info-mode-standby.json"),
         ),
     )
