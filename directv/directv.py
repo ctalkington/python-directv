@@ -12,7 +12,7 @@ from .__version__ import __version__
 from .const import VALID_REMOTE_KEYS
 from .exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
 from .models import Device
-
+from .util import parse_channel
 
 class DIRECTV:
     """Main class for handling connections with DirecTV servers."""
@@ -135,7 +135,7 @@ class DIRECTV:
         self._device.update_from_dict({})
         return self._device
 
-    async def remote(self, key: str, client: str = "0"):
+    async def remote(self, key: str, client: str = "0") -> None:
         """Emulate pressing a key on the remote.
 
         Supported keys: power, poweron, poweroff, format,
@@ -164,6 +164,18 @@ class DIRECTV:
         }
 
         await self._request("remote/processKey", params=keypress)
+
+    async def tune(channel: str, client: str = "0") -> None:
+        """Change the channel on the receiver."""
+        major, minor = parse_channel(channel)
+
+        tune = {
+            "major": major,
+            "minor": minor,
+            "clientAddr": client,
+        }
+
+        await self._request("tv/tune", params=tune)
 
     async def close(self) -> None:
         """Close open client session."""
