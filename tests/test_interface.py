@@ -203,7 +203,6 @@ async def test_state_restricted_mode(aresponses):
         assert response.program is None
 
 
-
 @pytest.mark.asyncio
 async def test_state_restricted_tuned(aresponses):
     """Test standby state is handled correctly."""
