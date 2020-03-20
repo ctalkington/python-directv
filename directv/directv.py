@@ -151,7 +151,7 @@ class DIRECTV:
         if self._device is None:
             raise DIRECTVError("Unable to communicate with receiver")
 
-        if not isinstance(key, str) is str:
+        if not isinstance(key, str):
             raise DIRECTVError("Remote key should be a string")
 
         if not key.lower() in VALID_REMOTE_KEYS:
