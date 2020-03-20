@@ -203,7 +203,7 @@ class DIRECTV:
 
         await self._request("tv/tune", params=tune)
 
-    async def tuned(self, client: str) -> Program:
+    async def tuned(self, client: str = "0") -> Program:
         """Get currently tuned program."""
         tuned = await self._request("tv/getTuned", params={"clientAddr": client})
         return Program.from_dict(tuned)
