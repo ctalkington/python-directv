@@ -11,7 +11,6 @@ HOST = "1.2.3.4"
 PORT = 8080
 
 MATCH_HOST = f"{HOST}:{PORT}"
-NON_STANDARD_PORT = 3333
 
 
 @pytest.mark.asyncio
