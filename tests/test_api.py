@@ -5,7 +5,7 @@ import pytest
 from aiohttp import ClientSession
 from directv import DIRECTV
 
-from . Import load_fixture
+from . import load_fixture
 
 HOST = "1.2.3.4"
 PORT = 8080
@@ -41,6 +41,16 @@ async def test_update(aresponses):
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
         response = await dtv.update()
-        assert response.info.version == ""
-        assert response.info.receiver_id == ""
+
+        assert response.info
+        assert response.info.brand == "DirecTV"
+        assert response.info.version == "0x4ed7"
+        assert response.info.receiver_id == "028877455858"
+
+        assert response.locations
+        assert len(response.locations) == 2
+        assert response.locations[0].name == "Host"
+        assert response.locations[0].address == "0"
         
+        assert response.locations[1].name == "Client"
+        assert response.locations[1].address == "2CA17D1CD30X"
