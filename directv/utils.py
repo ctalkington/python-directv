@@ -2,13 +2,13 @@
 from typing import Tuple
 
 
-def parse_channel_number(channel: str) -> Tuple[int, int]:
+def parse_channel_number(channel: str) -> Tuple[str, str]:
     """Convert a channel number into its major and minor."""
     try:
         major, minor = channel.split("-")
     except ValueError:
         major = channel
-        minor = 65535
+        minor = "65535"
 
     return major, minor
 
