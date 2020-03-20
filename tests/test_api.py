@@ -24,7 +24,7 @@ async def test_update(aresponses):
         aresponses.Response(
             status=200,
             headers={"Content-Type": "application/json"},
-            text=load_fixture("get-version.json"),
+            text=load_fixture("info-get-version.json"),
         ),
     )
 
@@ -35,7 +35,7 @@ async def test_update(aresponses):
         aresponses.Response(
             status=200,
             headers={"Content-Type": "application/json"},
-            text=load_fixture("get-locations.json"),
+            text=load_fixture("info-get-locations.json"),
         ),
     )
 
