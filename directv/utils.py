@@ -17,5 +17,5 @@ def combine_channel_number(major: int, minor: int) -> str:
     """Create a combined channel number from its major and minor."""
     if minor == 65535:
         return str(major)
-    else:
-        return '%d-%d' % (major, minor)
+
+    return '%d-%d' % (major, minor)
