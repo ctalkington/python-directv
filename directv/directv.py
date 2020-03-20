@@ -11,7 +11,7 @@ from yarl import URL
 from .__version__ import __version__
 from .const import VALID_REMOTE_KEYS
 from .exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
-from .models import Device, State, Program
+from .models import Device, Program, State
 from .utils import parse_channel_number
 
 
@@ -165,7 +165,7 @@ class DIRECTV:
             mode = await self._request("info/mode", params={"clientAddr": client})
             authorized = True
             available = True
-            standby = (mode["mode"] == 1)
+            standby = mode["mode"] == 1
         except DIRECTVAccessRestricted:
             authorized = False
             available = False
