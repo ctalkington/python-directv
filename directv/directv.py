@@ -146,9 +146,6 @@ class DIRECTV:
         blue, chanup, chandown, prev, 0, 1, 2, 3, 4, 5,
         6, 7, 8, 9, dash, enter
         """
-        if not isinstance(key, str):
-            raise DIRECTVError("Remote key should be a string")
-
         if not key.lower() in VALID_REMOTE_KEYS:
             raise DIRECTVError(f"Remote key is invalid: {key}")
 
