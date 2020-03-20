@@ -126,10 +126,10 @@ class DIRECTV:
                 raise DIRECTVError("DirecTV device returned an empty API response")
 
             locations = await self._request("info/getLocations")
-            if locations is None:
+            if locations is None or "locations" not in locations:
                 raise DIRECTVError("DirecTV device returned an empty API response")
 
-            self._device = Device({"info": info, "locations": locations})
+            self._device = Device({"info": info, "locations": locations["locations"]})
             return self._device
 
         self._device.update_from_dict({})
@@ -151,7 +151,7 @@ class DIRECTV:
         if self._device is None:
             raise DIRECTVError("Unable to communicate with receiver")
 
-        if not isinstance(key, str) is str:
+        if not isinstance(key, str):
             raise DIRECTVError("Remote key should be a string")
 
         if not key.lower() in VALID_REMOTE_KEYS:
