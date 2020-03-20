@@ -159,11 +159,11 @@ class DIRECTV:
 
     async def state(self, client: str = "0") -> State:
         """Get state of receiver client."""
+        authorized = True
         program = None
 
         try:
             mode = await self._request("info/mode", params={"clientAddr": client})
-            authorized = True
             available = True
             standby = mode["mode"] == 1
         except DIRECTVAccessRestricted:
