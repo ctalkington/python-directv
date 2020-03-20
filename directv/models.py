@@ -56,7 +56,7 @@ class Program:
         """Return Info object from DirecTV API response."""
         unique_id = data.get("uniqueId", None)
 
-        return Location(
+        return Program(
             program_id=data.get("programId", None),
             episode_title=data.get("episodeTitle", None),
             recorded=(unique_id is not None),
