@@ -110,32 +110,6 @@ async def test_state(aresponses):
 
         assert isinstance(response.program, Program)
 
-@pytest.mark.asyncio
-async def test_state_restricted_mode(aresponses):
-    """Test standby state is handled correctly."""
-    aresponses.add(
-        MATCH_HOST,
-        "/info/mode",
-        "GET",
-        aresponses.Response(
-            status=403,
-            headers={"Content-Type": "application/json"},
-            text=load_fixture("info-mode-restricted.json"),
-        ),
-    )
-
-    async with ClientSession() as session:
-        dtv = DIRECTV(HOST, session=session)
-        response = await dtv.state()
-
-        assert response
-        assert isinstance(response, State)
-        assert not response.available
-        assert response.standby
-        assert not response.authorized
-
-        assert response.program is None
-
 
 @pytest.mark.asyncio
 async def test_state_error_mode(aresponses):
@@ -200,6 +174,34 @@ async def test_state_error_tuned(aresponses):
         assert response.authorized
 
         assert response.program is None
+
+
+@pytest.mark.asyncio
+async def test_state_restricted_mode(aresponses):
+    """Test standby state is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/mode",
+        "GET",
+        aresponses.Response(
+            status=403,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("info-mode-restricted.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.state()
+
+        assert response
+        assert isinstance(response, State)
+        assert not response.available
+        assert response.standby
+        assert not response.authorized
+
+        assert response.program is None
+
 
 
 @pytest.mark.asyncio
