@@ -2,7 +2,7 @@
 from typing import Tuple
 
 
-def parse_channel(channel: str) -> Tuple[str,str]:
+def parse_channel_number(channel: str) -> Tuple[str,str]:
     """Convert a channel number into its major and minor."""
     try:
         major, minor = channel.split('-')
