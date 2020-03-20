@@ -11,7 +11,7 @@ from yarl import URL
 from .__version__ import __version__
 from .const import VALID_REMOTE_KEYS
 from .exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
-from .models import Device
+from .models import Device, State, Program
 from .utils import parse_channel_number
 
 
@@ -157,6 +157,40 @@ class DIRECTV:
 
         await self._request("remote/processKey", params=keypress)
 
+    async def state(self, client: str) -> dict:
+        """Get state of receiver client."""
+        program = None
+
+        try:
+            mode = await self._request("info/mode", params={"clientAddr": client})
+            authorized = True
+            available = True
+            standby = (mode["mode"] == 1)
+        except DIRECTVAccessRestricted:
+            authorized = False
+            available = False
+            standby = True
+        except DIRECTVError:
+            available = False
+            standby = True
+
+        if standby == False:
+            try:
+                program = await self.tuned(client)
+            except DIRECTVAccessRestricted:
+                authorized = False
+                program = None
+            except DIRECTVError:
+                available = False
+                program = None
+
+        return State(
+            authorized=authorized,
+            available=available,
+            standby=standby,
+            program=program,
+        )
+
     async def tune(self, channel: str, client: str = "0") -> None:
         """Change the channel on the receiver."""
         major, minor = parse_channel_number(channel)
@@ -168,6 +202,11 @@ class DIRECTV:
         }
 
         await self._request("tv/tune", params=tune)
+
+    async def tuned(self, client: str) -> Program:
+        """Get currently tuned program."""
+        tuned = await self._request("tv/getTuned", params={"clientAddr": client})
+        return Program.from_dict(tuned)
 
     async def close(self) -> None:
         """Close open client session."""
