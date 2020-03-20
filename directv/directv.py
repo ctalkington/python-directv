@@ -14,6 +14,7 @@ from .exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTV
 from .models import Device
 from .utils import parse_channel_number
 
+
 class DIRECTV:
     """Main class for handling connections with DirecTV servers."""
 
