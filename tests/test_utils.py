@@ -1,5 +1,5 @@
 """Tests for DirecTV Helpers."""
-import directv.utils
+import directv.utils as utils
 
 
 def test_combine_channel_number() -> None:
