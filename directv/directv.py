@@ -174,7 +174,7 @@ class DIRECTV:
             available = False
             standby = True
 
-        if standby == False:
+        if is not standby:
             try:
                 program = await self.tuned(client)
             except DIRECTVAccessRestricted:
