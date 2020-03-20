@@ -2,7 +2,7 @@
 import pytest
 from aiohttp import ClientSession
 from directv import DIRECTV
-from directv.models import Program
+from directv.models import Program, State
 
 from . import load_fixture
 
@@ -72,6 +72,65 @@ async def test_remote(aresponses):
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
         await dtv.remote("info")
+
+
+@pytest.mark.asyncio
+async def test_state(aresponses):
+    """Test tuned is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/mode",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("info-state.json"),
+        ),
+    )
+
+    aresponses.add(
+        MATCH_HOST,
+        "/tv/getTuned",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("tv-get-tuned.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.state()
+
+        assert response
+        assert isinstance(response, State)
+
+        assert isinstance(response.program, Program)
+
+
+@pytest.mark.asyncio
+async def test_state_standby(aresponses):
+    """Test tuned is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/mode",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("info-state-standby.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.state()
+
+        assert response
+        assert isinstance(response, State)
+
+        assert state.program is None
 
 
 @pytest.mark.asyncio
