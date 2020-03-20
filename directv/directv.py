@@ -157,7 +157,7 @@ class DIRECTV:
 
         await self._request("remote/processKey", params=keypress)
 
-    async def state(self, client: str) -> dict:
+    async def state(self, client: str) -> State:
         """Get state of receiver client."""
         program = None
 
