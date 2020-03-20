@@ -1,7 +1,7 @@
 """Models for DirecTV."""
 
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
 from .exceptions import DIRECTVError
 
@@ -71,7 +71,7 @@ class State:
     authorized: bool
     available: bool
     standby: bool
-    program: Program
+    program: Optional[Program]
 
 
 class Device:
