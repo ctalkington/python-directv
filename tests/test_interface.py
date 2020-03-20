@@ -112,7 +112,7 @@ async def test_state(aresponses):
 
 
 @pytest.mark.asyncio
-async def test_state_standby(aresponses):
+async def test_state_restricted(aresponses):
     """Test standby state is handled correctly."""
     aresponses.add(
         MATCH_HOST,
