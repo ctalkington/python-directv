@@ -92,4 +92,4 @@ async def test_remote(aresponses):
 
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
-        response = await dtv.remote("info")
+        await dtv.remote("info")
