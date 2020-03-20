@@ -132,7 +132,7 @@ async def test_state_restricted_mode(aresponses):
         assert response
         assert isinstance(response, State)
         assert not response.available
-        assert not response.standby
+        assert response.standby
         assert not response.authorized
 
         assert response.program is None
