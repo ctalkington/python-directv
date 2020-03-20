@@ -146,12 +146,6 @@ class DIRECTV:
         blue, chanup, chandown, prev, 0, 1, 2, 3, 4, 5,
         6, 7, 8, 9, dash, enter
         """
-        if self._device is None:
-            await self.update()
-
-        if self._device is None:
-            raise DIRECTVError("Unable to communicate with receiver")
-
         if not isinstance(key, str):
             raise DIRECTVError("Remote key should be a string")
 
