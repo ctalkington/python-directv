@@ -76,7 +76,7 @@ async def test_remote(aresponses):
 
 @pytest.mark.asyncio
 async def test_state(aresponses):
-    """Test tuned is handled correctly."""
+    """Test active state is handled correctly."""
     aresponses.add(
         MATCH_HOST,
         "/info/mode",
@@ -111,7 +111,7 @@ async def test_state(aresponses):
 
 @pytest.mark.asyncio
 async def test_state_standby(aresponses):
-    """Test tuned is handled correctly."""
+    """Test standby state is handled correctly."""
     aresponses.add(
         MATCH_HOST,
         "/info/mode",
