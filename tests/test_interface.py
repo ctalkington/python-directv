@@ -110,7 +110,6 @@ async def test_state(aresponses):
 
         assert isinstance(response.program, Program)
 
-
 @pytest.mark.asyncio
 async def test_state_restricted_mode(aresponses):
     """Test standby state is handled correctly."""
@@ -134,6 +133,71 @@ async def test_state_restricted_mode(aresponses):
         assert not response.available
         assert response.standby
         assert not response.authorized
+
+        assert response.program is None
+
+
+@pytest.mark.asyncio
+async def test_state_error_mode(aresponses):
+    """Test state with generic mode error is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/mode",
+        "GET",
+        aresponses.Response(
+            status=500,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("info-mode-error.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.state()
+
+        assert response
+        assert isinstance(response, State)
+        assert not response.available
+        assert response.standby
+        assert response.authorized
+
+        assert response.program is None
+
+
+@pytest.mark.asyncio
+async def test_state_error_tuned(aresponses):
+    """Test state with generic tuned error is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/mode",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("info-mode.json"),
+        ),
+    )
+
+    aresponses.add(
+        MATCH_HOST,
+        "/tv/getTuned",
+        "GET",
+        aresponses.Response(
+            status=500,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("tv-get-tuned-error.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.state()
+
+        assert response
+        assert isinstance(response, State)
+        assert not response.available
+        assert response.standby
+        assert response.authorized
 
         assert response.program is None
 
