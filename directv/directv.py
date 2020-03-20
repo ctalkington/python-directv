@@ -12,6 +12,7 @@ from .__version__ import __version__
 from .const import VALID_REMOTE_KEYS
 from .exceptions import DIRECTVAccessRestricted, DIRECTVConnectionError, DIRECTVError
 from .models import Device
+from .utils import parse_channel_number
 
 
 class DIRECTV:
@@ -135,7 +136,7 @@ class DIRECTV:
         self._device.update_from_dict({})
         return self._device
 
-    async def remote(self, key: str, client: str = "0"):
+    async def remote(self, key: str, client: str = "0") -> None:
         """Emulate pressing a key on the remote.
 
         Supported keys: power, poweron, poweroff, format,
@@ -145,15 +146,6 @@ class DIRECTV:
         blue, chanup, chandown, prev, 0, 1, 2, 3, 4, 5,
         6, 7, 8, 9, dash, enter
         """
-        if self._device is None:
-            await self.update()
-
-        if self._device is None:
-            raise DIRECTVError("Unable to communicate with receiver")
-
-        if not isinstance(key, str):
-            raise DIRECTVError("Remote key should be a string")
-
         if not key.lower() in VALID_REMOTE_KEYS:
             raise DIRECTVError(f"Remote key is invalid: {key}")
 
@@ -164,6 +156,18 @@ class DIRECTV:
         }
 
         await self._request("remote/processKey", params=keypress)
+
+    async def tune(self, channel: str, client: str = "0") -> None:
+        """Change the channel on the receiver."""
+        major, minor = parse_channel_number(channel)
+
+        tune = {
+            "major": major,
+            "minor": minor,
+            "clientAddr": client,
+        }
+
+        await self._request("tv/tune", params=tune)
 
     async def close(self) -> None:
         """Close open client session."""
