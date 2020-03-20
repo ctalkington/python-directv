@@ -1,6 +1,4 @@
 """Tests for DIRECTV."""
-import asyncio
-
 import pytest
 from aiohttp import ClientSession
 from directv import DIRECTV
