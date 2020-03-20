@@ -9,4 +9,4 @@ def test_combine_channel_number() -> None:
 
 def test_parse_channel_number() -> None:
     """Test the parsing of channel numbers."""
-    assert utils.parse_channel_number("231") == (231, 65535)
+    assert utils.parse_channel_number("231") == ("231", "65535")
