@@ -165,7 +165,7 @@ class DIRECTV:
 
         await self._request("remote/processKey", params=keypress)
 
-    async def tune(channel: str, client: str = "0") -> None:
+    async def tune(self, channel: str, client: str = "0") -> None:
         """Change the channel on the receiver."""
         major, minor = parse_channel_number(channel)
 
