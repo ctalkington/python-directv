@@ -105,7 +105,7 @@ async def test_state(aresponses):
 
         assert response
         assert isinstance(response, State)
-        assert response.available 
+        assert response.available
         assert not response.standby
 
         assert isinstance(response.program, Program)
