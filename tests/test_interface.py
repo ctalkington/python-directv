@@ -52,3 +52,44 @@ async def test_update(aresponses):
 
         assert response.locations[1].name == "Client"
         assert response.locations[1].address == "2CA17D1CD30X"
+
+
+@pytest.mark.asyncio
+async def test_remote(aresponses):
+    """Test DIRECTV response is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/getVersion",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("info-get-version.json"),
+        ),
+    )
+
+    aresponses.add(
+        MATCH_HOST,
+        "/info/getLocations",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("info-get-locations.json"),
+        ),
+    )
+
+    aresponses.add(
+        MATCH_HOST,
+        "/remote/processKey",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("remote-process-key.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.remote("info")
