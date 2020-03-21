@@ -70,8 +70,8 @@ class Program:
     @staticmethod
     def from_dict(data: dict):
         """Return Info object from DirecTV API response."""
-        major = data.get("major")
-        minor = data.get("minor")
+        major = data.get("major", 0)
+        minor = data.get("minor", 65535)
         episode_title = data.get("episodeTitle", None)
         program_type = "tvshow" if episode_title is not None else "movie"
         start_time = data.get("startTime", None)
