@@ -96,17 +96,11 @@ def test_device() -> None:
     assert device
 
     assert device.info
-    assert device.info.brand == "DirecTV"
-    assert device.info.version == "0x4ed7"
-    assert device.info.receiver_id == "028877455858"
+    assert isinstance(device.info, models.Info)
 
     assert device.locations
     assert len(device.locations) == 2
-    assert device.locations[0].name == "Host"
-    assert device.locations[0].address == "0"
-
-    assert device.locations[1].name == "Client"
-    assert device.locations[1].address == "2CA17D1CD30X"
+    assert isinstance(device.locations[0], models.Location)
 
 
 def test_device_no_data() -> None:
@@ -115,16 +109,27 @@ def test_device_no_data() -> None:
         models.Device({})
 
 
+def test_info() -> None:
+    """Test the Info model."""
+    info = models.Info.from_dict(DEVICE["info"]))
+
+    assert info
+    assert info.brand == "DirecTV"
+    assert info.version == "0x4ed7"
+    assert info.receiver_id == "028877455858"
+
+
 def test_location() -> None:
     """Test the Location model."""
-    location= models.Location.from_dict(DEVICE["locations"][0])
+
+    location = models.Location.from_dict(DEVICE["locations"][0])
 
     assert location
     assert not location.client
     assert location.name == "Host"
     assert location.address == "0"
 
-    location= models.Location.from_dict(DEVICE["locations"][1])
+    location = models.Location.from_dict(DEVICE["locations"][1])
 
     assert location
     assert location.client
