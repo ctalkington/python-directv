@@ -87,7 +87,7 @@ class Program:
             payperview=data.get("isPpv", False),
             position=data.get("offset", 0),
             purchased=data.get("isPurchased", False),
-            rating=data.get"rating", None),
+            rating=data.get("rating", None),
             recorded=(unique_id is not None),
             recording=data.get("isRecording", False),
             start_time=start_time,
