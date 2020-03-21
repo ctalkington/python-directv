@@ -81,6 +81,15 @@ async def test_remote(aresponses):
 
 
 @pytest.mark.asyncio
+async def test_remote_invalid_key(aresponses):
+    """Test remote with invalid key is handled correctly."""
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        with pytest.raises(DIRECTVError):
+            await dtv.remote("super")
+
+
+@pytest.mark.asyncio
 async def test_state(aresponses):
     """Test active state is handled correctly."""
     aresponses.add(
