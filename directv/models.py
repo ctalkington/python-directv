@@ -59,6 +59,9 @@ class Program:
     duration: int
     title: str
     episode_title: str
+    music_title: str
+    music_album: str
+    music_artist: str
     partial: bool
     payperview: bool
     position: int
@@ -73,7 +76,15 @@ class Program:
         major = data.get("major", 0)
         minor = data.get("minor", 65535)
         episode_title = data.get("episodeTitle", None)
-        program_type = "tvshow" if episode_title is not None else "movie"
+        music = data.get("music", {})
+        music_title = music.get("title", None)
+        music_album - music.get("cd", None)
+        music_artist = music.get("by", None)
+        program_type = "movie"
+        if episode_title is not None:
+            program_type = "tvshow"
+        elif music_title is not None:
+            program_type = "music"
         start_time = data.get("startTime", None)
         if start_time:
             start_time = datetime.fromtimestamp(start_time, timezone.utc)
@@ -87,6 +98,9 @@ class Program:
             duration=data.get("duration", 0),
             title=data.get("title", None),
             episode_title=episode_title,
+            music_title=music_title,
+            music_album=music_album,
+            music_artist=music_artist,
             ondemand=data.get("isVod", False),
             partial=data.get("isPartial", False),
             payperview=data.get("isPpv", False),
