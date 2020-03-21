@@ -1,7 +1,7 @@
 """Models for DirecTV."""
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timezone, utcnow
 from typing import List, Optional
 
 from .exceptions import DIRECTVError
@@ -123,6 +123,7 @@ class State:
     available: bool
     standby: bool
     program: Optional[Program]
+    at: datetime = utcnow()
 
 
 class Device:
