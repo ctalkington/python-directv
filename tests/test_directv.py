@@ -10,7 +10,7 @@ from directv.exceptions import (
     DIRECTVError,
 )
 
-from . Import load_fixure
+from . import load_fixure
 
 HOST = "1.2.3.4"
 PORT = 8080
