@@ -57,6 +57,7 @@ class Program:
     program_type: str
     duration: int
     episode_title: str
+    partial: bool
     payperview: bool
     position: int
     purchased: bool
@@ -84,6 +85,7 @@ class Program:
             duration=data.get("duration", 0),
             episode_title=episode_title,
             ondemand=data.get("isVod", False),
+            partial=data.get("isPartial", False),
             payperview=data.get("isPpv", False),
             position=data.get("offset", 0),
             purchased=data.get("isPurchased", False),
