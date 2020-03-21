@@ -152,17 +152,17 @@ def test_program_movie() -> None:
     assert not program.payperview
     assert not program.purchased
     assert not program.recording
-    assert program.channel == "231"
-    assert program.channel_name == "FOODHD"
-    assert program.program_id == "4405732"
+    assert program.channel == "312"
+    assert program.channel_name == "HALLHD"
+    assert program.program_id == "17016356"
     assert program.program_type == "movie"
-    assert program.title == ""
+    assert program.title == "Snow Bride"
     assert program.episode_title == None
-    assert program.rating == "No Rating"
+    assert program.rating == "TV-G"
     assert program.start_time == datetime(2010, 7, 5, 15, 0, 8, tzinfo=timezone.utc)
     assert program.duration == 1791
     assert program.position == 263
-    assert program.unique_id == "6728716739474078677"
+    assert program.unique_id is None
 
 def test_program_music() -> None:
     """Test the Program model with music channel."""
@@ -176,14 +176,17 @@ def test_program_music() -> None:
     assert not program.payperview
     assert not program.purchased
     assert not program.recording
-    assert program.channel == "231"
-    assert program.channel_name == "FOODHD"
-    assert program.program_id == "4405732"
+    assert program.channel == "851"
+    assert program.channel_name == "MCSJ"
+    assert program.program_id == "76917562"
     assert program.program_type == "music"
-    assert program.title == ""
+    assert program.title == "Smooth Jazz"
     assert program.episode_title == None
-    assert program.rating == "No Rating"
+    assert program.music_title == "Sparkle In Your Eyes"
+    assert program.music_album == "Slam Dunk (2014)"
+    assert program.music_artist == "Gerald Albright"
+    assert program.rating == "TV-PG"
     assert program.start_time == datetime(2010, 7, 5, 15, 0, 8, tzinfo=timezone.utc)
-    assert program.duration == 1791
-    assert program.position == 263
-    assert program.unique_id == "6728716739474078677"
+    assert program.duration == 86400
+    assert program.position == 15050
+    assert program.unique_id is None
