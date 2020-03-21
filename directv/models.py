@@ -78,7 +78,7 @@ class Program:
         episode_title = data.get("episodeTitle", None)
         music = data.get("music", {})
         music_title = music.get("title", None)
-        music_album - music.get("cd", None)
+        music_album = music.get("cd", None)
         music_artist = music.get("by", None)
         program_type = "movie"
         if episode_title is not None:
