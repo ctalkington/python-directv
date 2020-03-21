@@ -20,7 +20,7 @@ NON_STANDARD_PORT = 3333
 
 
 @pytest.mark.asyncio
-async def test_directv_request(aresponses):
+async def test_json_request(aresponses):
     """Test DIRECTV response is handled correctly."""
     aresponses.add(
         MATCH_HOST,
@@ -38,6 +38,39 @@ async def test_directv_request(aresponses):
         response = await dtv._request("/info/getVersion")
         assert response["status"]["code"] == 200
         assert response["status"]["commandResult"] == 0
+
+@pytest.mark.asyncio
+async def test_authenticated_request(aresponses):
+    """Test authenticated JSON response is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text='{"status": "ok"}',
+        ),
+    )
+    async with aiohttp.ClientSession() as session:
+        dtv = DIRECTV(HOST, username="you", password="socool", session=session,)
+        response = await dtv._request("/")
+        assert response["status"] == "ok"
+
+
+@pytest.mark.asyncio
+async def test_text_request(aresponses):
+    """Test non JSON response is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/",
+        "GET",
+        aresponses.Response(status=200, text="OK"),
+    )
+    async with aiohttp.ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv._request("/")
+        assert response == "OK"
 
 
 @pytest.mark.asyncio
