@@ -115,6 +115,23 @@ def test_device_no_data() -> None:
         models.Device({})
 
 
+def test_location() -> None:
+    """Test the Location model."""
+    location= models.Location.from_dict(DEVICE["locations"][0])
+
+    assert location
+    assert not location.client
+    assert location.name == "Host"
+    assert location.address == "0"
+
+    location= models.Location.from_dict(DEVICE["locations"][1])
+
+    assert location
+    assert location.client
+    assert location.name == "Client"
+    assert location.address == "2CA17D1CD30X"
+
+
 def test_program() -> None:
     """Test the Program model."""
     program = models.Program.from_dict(PROGRAM)
