@@ -170,7 +170,7 @@ async def test_state_error_tuned(aresponses):
         assert response
         assert isinstance(response, State)
         assert not response.available
-        assert response.standby
+        assert not response.standby
         assert response.authorized
 
         assert response.program is None
