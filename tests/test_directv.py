@@ -10,6 +10,8 @@ from directv.exceptions import (
     DIRECTVError,
 )
 
+from . Import load_fixure
+
 HOST = "1.2.3.4"
 PORT = 8080
 
@@ -152,3 +154,26 @@ async def test_http_error500(aresponses):
         dtv = DIRECTV(HOST, session=session)
         with pytest.raises(DIRECTVError):
             assert await dtv._request("/info/getVersion")
+
+
+@pytest.mark.asyncio
+async def test_http_error500_json(aresponses):
+    """Test HTTP 500 json response handling."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/getVersion",
+        "GET",
+        aresponses.Response(
+            status=500,
+            headers={"Content-Type": "application/json"},
+            text=load_fixure("info-get-version-error.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        with pytest.raises(DIRECTVError):
+            response = await dtv._request("/info/getVersion")
+            assert response
+            assert response.status
+            assert response.status.code == 500
