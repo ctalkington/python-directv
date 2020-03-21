@@ -1,4 +1,6 @@
 """Tests for DirecTV Models."""
+from datetime import datetime, timezone
+
 import directv.models as models
 import pytest
 from directv import DIRECTVError
@@ -88,6 +90,6 @@ def test_program() -> None:
     assert program.program_type == "tvshow"
     assert program.title == "Tyler's Ultimate"
     assert program.episode_title == "Spaghetti and Clam Sauce"
-    assert program.start_time == ""
+    assert program.start_time == datetime(2010, 7, 5, 15, 0, 8, tzinfo=timezone.utc)
     assert program.duration == 1791
     assert program.position == 263
