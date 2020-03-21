@@ -111,7 +111,7 @@ def test_device_no_data() -> None:
 
 def test_info() -> None:
     """Test the Info model."""
-    info = models.Info.from_dict(DEVICE["info"]))
+    info = models.Info.from_dict(DEVICE["info"])
 
     assert info
     assert info.brand == "DirecTV"
