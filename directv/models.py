@@ -1,6 +1,7 @@
 """Models for DirecTV."""
 
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from typing import List, Optional
 
 from .exceptions import DIRECTVError
@@ -50,12 +51,14 @@ class Program:
     channel: str
     channel_name: str
     recorded: bool
+    recording: bool
     program_id: int
+    program_type: str
     duration: int
     episode_title: str
     position: int
     rating: str
-    start_time: int
+    start_time: datetime
     unique_id: int
 
     @staticmethod
@@ -63,18 +66,25 @@ class Program:
         """Return Info object from DirecTV API response."""
         major = data.get("major")
         minor = data.get("minor")
-        unique_id = data.get("uniqueId", None)
+        episode_title = data.get("episodeTitle", None)
+        program_type = "tvshow" if episode_title is not None else "movie"
+        start_time = data.get("startTime", None)
+        if start_time:
+            start_time = datetime.fromtimestamp(start_time, timezone.utc)
+        unique_id = data.get("uniqueId"), None)
 
         return Program(
             channel=combine_channel_number(major, minor),
             channel_name=data.get("callsign", None),
             program_id=data.get("programId", None),
+            program_type=program_type,
             duration=data.get("duration", 0),
-            episode_title=data.get("episodeTitle", None),
+            episode_title=episode_title,
             position=data.get("offset", 0),
             rating=data.get"rating", None),
             recorded=(unique_id is not None),
-            start_time=data.get("startTime", None),
+            recording=data.get("isRecording", False),
+            start_time=start_time,
             unique_id=unique_id,
         )
 
