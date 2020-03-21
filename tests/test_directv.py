@@ -166,7 +166,7 @@ async def test_http_error500_json(aresponses):
         aresponses.Response(
             status=500,
             headers={"Content-Type": "application/json"},
-            text=load_fixure("info-get-version-error.json"),
+            text=load_fixture("info-get-version-error.json"),
         ),
     )
 
