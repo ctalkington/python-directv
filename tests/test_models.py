@@ -195,12 +195,9 @@ def test_program_music() -> None:
 
 def test_state() -> None:
     """Test the State model."""
-    program = models.Program(PROGRAM)
+    program = models.Program.from_dict(PROGRAM)
     state = models.State(
-        authorized=True,
-        available=True,
-        standby=False,
-        program=program,
+        authorized=True, available=True, standby=False, program=program,
     )
 
     assert state
