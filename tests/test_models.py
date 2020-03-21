@@ -1,8 +1,8 @@
 """Tests for DirecTV Models."""
+import directv.models as models
 import pytest
 
 from directv import DIRECTVError
-import directv.models as models
 
 DEVICE = {
     "info": {
@@ -13,15 +13,9 @@ DEVICE = {
         "version": "1.2"
     },
     "locations": [
-        {
-            "clientAddr": "0",
-            "locationName": "Host"
-        },
-        {
-           "clientAddr": "2CA17D1CD30X",
-           "locationName": "Client"
-        }
-    ]
+        {"clientAddr": "0", "locationName": "Host"},
+        {"clientAddr": "2CA17D1CD30X", "locationName": "Client"},
+    ],
 }
 
 PROGRAM = {
@@ -48,21 +42,21 @@ PROGRAM = {
     "startTime": 1278342008,
     "stationId": 3900976,
     "title": "Tyler's Ultimate",
-    "uniqueId": "6728716739474078694"
+    "uniqueId": "6728716739474078694",
 }
 
 
 def test_device() -> None:
     """Test the Device model."""
     device = models.Device(DEVICE)
-    
+
     assert device
 
 
 def test_device_no_data() -> None:
     """Test the Device model."""
     with pytest.raises(DIRECTVError):
-        device = models.Device({})
+        models.Device({})
 
 
 def test_program() -> None:
