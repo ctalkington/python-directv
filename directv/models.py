@@ -50,13 +50,16 @@ class Program:
 
     channel: str
     channel_name: str
+    ondemand: bool
     recorded: bool
     recording: bool
     program_id: int
     program_type: str
     duration: int
     episode_title: str
+    payperview: bool
     position: int
+    purchased: bool
     rating: str
     start_time: datetime
     unique_id: int
@@ -80,7 +83,10 @@ class Program:
             program_type=program_type,
             duration=data.get("duration", 0),
             episode_title=episode_title,
+            ondemand=data.get("isVod", False),
+            payperview=data.get("isPpv", False),
             position=data.get("offset", 0),
+            purchased=data.get("isPurchased", False),
             rating=data.get"rating", None),
             recorded=(unique_id is not None),
             recording=data.get("isRecording", False),
