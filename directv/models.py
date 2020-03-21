@@ -120,9 +120,7 @@ class Device:
     def __init__(self, data: dict):
         """Initialize an empty DirecTV device class."""
         # Check if all elements are in the passed dict, else raise an Error
-        if any(
-            k not in data for k in ["locations", "info"]
-        ):
+        if any(k not in data for k in ["locations", "info"]):
             raise DIRECTVError(
                 "DirecTV data is incomplete, cannot construct device object"
             )
