@@ -191,3 +191,17 @@ def test_program_music() -> None:
     assert program.duration == 86400
     assert program.position == 15050
     assert program.unique_id is None
+
+
+def test_state() -> None:
+    """Test the State model."""
+    program = models.Program(PROGRAM)
+    state = models.State(
+        authorized=True,
+        available=True,
+        standby=False,
+        program=program,
+    )
+
+    assert state
+    assert isinstance(state.at, datetime)
