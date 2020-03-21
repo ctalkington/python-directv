@@ -52,7 +52,7 @@ PROGRAM_MOVIE = {
     "duration": 7200,
     "isOffAir": False,
     "isPclocked": 3,
-    "isPpv": false,
+    "isPpv": False,
     "isRecording": False,
     "isVod": False,
     "major": 312,
@@ -160,8 +160,8 @@ def test_program_movie() -> None:
     assert program.episode_title == None
     assert program.rating == "TV-G"
     assert program.start_time == datetime(2010, 7, 5, 15, 0, 8, tzinfo=timezone.utc)
-    assert program.duration == 1791
-    assert program.position == 263
+    assert program.duration == 7200
+    assert program.position == 4437
     assert program.unique_id is None
 
 def test_program_music() -> None:
