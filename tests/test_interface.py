@@ -1,4 +1,6 @@
 """Tests for DIRECTV."""
+from typing import List
+
 import pytest
 from aiohttp import ClientSession
 from directv import DIRECTV, DIRECTVError
@@ -43,7 +45,7 @@ async def test_update(aresponses):
 
         assert response
         assert isinstance(response.info, Info)
-        assert isinstance(response.locations, list)
+        assert isinstance(response.locations, List)
 
         response = await dtv.update()
 
