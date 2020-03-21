@@ -94,3 +94,4 @@ def test_program() -> None:
     assert program.start_time == datetime(2010, 7, 5, 15, 0, 8, tzinfo=timezone.utc)
     assert program.duration == 1791
     assert program.position == 263
+    assert program.unique_id == "6728716739474078694"
