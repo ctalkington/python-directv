@@ -1,7 +1,6 @@
 """Tests for DirecTV Models."""
 import directv.models as models
 import pytest
-
 from directv import DIRECTVError
 
 DEVICE = {
@@ -10,7 +9,7 @@ DEVICE = {
         "receiverId": "0288 7745 5858",
         "stbSoftwareVersion": "0x4ed7",
         "systemTime": 1281625203,
-        "version": "1.2"
+        "version": "1.2",
     },
     "locations": [
         {"clientAddr": "0", "locationName": "Host"},
