@@ -75,7 +75,7 @@ class Program:
         start_time = data.get("startTime", None)
         if start_time:
             start_time = datetime.fromtimestamp(start_time, timezone.utc)
-        unique_id = data.get("uniqueId"), None)
+        unique_id = data.get("uniqueId", None)
 
         return Program(
             channel=combine_channel_number(major, minor),
