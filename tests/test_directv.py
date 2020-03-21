@@ -63,10 +63,7 @@ async def test_authenticated_request(aresponses):
 async def test_text_request(aresponses):
     """Test non JSON response is handled correctly."""
     aresponses.add(
-        MATCH_HOST,
-        "/",
-        "GET",
-        aresponses.Response(status=200, text="OK"),
+        MATCH_HOST, "/", "GET", aresponses.Response(status=200, text="OK"),
     )
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
