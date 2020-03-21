@@ -41,6 +41,7 @@ async def test_update(aresponses):
         dtv = DIRECTV(HOST, session=session)
         response = await dtv.update()
 
+        assert response
         assert response.info
         assert response.info.brand == "DirecTV"
         assert response.info.version == "0x4ed7"
@@ -53,6 +54,11 @@ async def test_update(aresponses):
 
         assert response.locations[1].name == "Client"
         assert response.locations[1].address == "2CA17D1CD30X"
+
+        response = await dtv.update()
+
+        assert response
+        assert response.info
 
 
 @pytest.mark.asyncio
