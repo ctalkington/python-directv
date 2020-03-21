@@ -79,6 +79,7 @@ def test_program() -> None:
 
     assert program
     assert program.recorded
+    assert program.viewed
     assert not program.ondemand
     assert not program.partial
     assert not program.payperview
