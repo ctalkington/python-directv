@@ -39,6 +39,7 @@ async def test_json_request(aresponses):
         assert response["status"]["code"] == 200
         assert response["status"]["commandResult"] == 0
 
+
 @pytest.mark.asyncio
 async def test_authenticated_request(aresponses):
     """Test authenticated JSON response is handled correctly."""
@@ -52,7 +53,7 @@ async def test_authenticated_request(aresponses):
             text='{"status": "ok"}',
         ),
     )
-    async with aiohttp.ClientSession() as session:
+    async with ClientSession() as session:
         dtv = DIRECTV(HOST, username="you", password="socool", session=session,)
         response = await dtv._request("/")
         assert response["status"] == "ok"
@@ -67,7 +68,7 @@ async def test_text_request(aresponses):
         "GET",
         aresponses.Response(status=200, text="OK"),
     )
-    async with aiohttp.ClientSession() as session:
+    async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
         response = await dtv._request("/")
         assert response == "OK"
