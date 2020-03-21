@@ -122,7 +122,10 @@ def test_info() -> None:
 
 def test_location() -> None:
     """Test the Location model."""
-    locations = vars(DEVICE["locations"][0])
+    locations = iter(DEVICE["locations"])
+
+
+    locations = vars(locations[0])
     location = models.Location.from_dict(locations)
 
     assert location
@@ -130,7 +133,7 @@ def test_location() -> None:
     assert location.name == "Host"
     assert location.address == "0"
 
-    locations = vars(DEVICE["locations"][1])
+    locations = vars(locations[1])
     location = models.Location.from_dict(locations)
 
     assert location
