@@ -52,6 +52,19 @@ def test_device() -> None:
 
     assert device
 
+    assert device.info
+    assert device.info.brand == "DirecTV"
+    assert device.info.version == "0x4ed7"
+    assert device.info.receiver_id == "028877455858"
+
+    assert device.locations
+    assert len(device.locations) == 2
+    assert device.locations[0].name == "Host"
+    assert device.locations[0].address == "0"
+
+    assert device.locations[1].name == "Client"
+    assert device.locations[1].address == "2CA17D1CD30X"
+
 
 def test_device_no_data() -> None:
     """Test the Device model."""
