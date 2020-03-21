@@ -121,7 +121,7 @@ class Device:
         """Initialize an empty DirecTV device class."""
         # Check if all elements are in the passed dict, else raise an Error
         if any(
-            k not in data and data.get(k) is not None for k in ["locations", "info"]
+            k not in data for k in ["locations", "info"]
         ):
             raise DIRECTVError(
                 "DirecTV data is incomplete, cannot construct device object"
