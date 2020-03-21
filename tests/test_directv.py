@@ -10,7 +10,7 @@ from directv.exceptions import (
     DIRECTVError,
 )
 
-from . import load_fixure
+from . import load_fixture
 
 HOST = "1.2.3.4"
 PORT = 8080
@@ -175,5 +175,6 @@ async def test_http_error500_json(aresponses):
         with pytest.raises(DIRECTVError):
             response = await dtv._request("/info/getVersion")
             assert response
-            assert response.status
-            assert response.status.code == 500
+            assert response["status"]
+            assert response["status"]["code"] == 500
+            assert response["status"]["commandResult"] == 1
