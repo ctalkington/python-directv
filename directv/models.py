@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import List, Optional
 
 from .exceptions import DIRECTVError
+from .utils import combine_channel_number
 
 
 @dataclass(frozen=True)
@@ -46,20 +47,34 @@ class Location:
 class Program:
     """Object holding all information of playing program."""
 
+    channel: str
+    channel_name: str
     recorded: bool
     program_id: int
+    duration: int
     episode_title: str
+    position: int
+    rating: str
+    start_time: int
     unique_id: int
 
     @staticmethod
     def from_dict(data: dict):
         """Return Info object from DirecTV API response."""
+        major = data.get("major")
+        minor = data.get("minor")
         unique_id = data.get("uniqueId", None)
 
         return Program(
+            channel=combine_channel_number(major, minor),
+            channel_name=data.get("callsign", None),
             program_id=data.get("programId", None),
+            duration=data.get("duration", 0),
             episode_title=data.get("episodeTitle", None),
+            position=data.get("offset", 0),
+            rating=data.get"rating", None),
             recorded=(unique_id is not None),
+            start_time=data.get("startTime", None),
             unique_id=unique_id,
         )
 
