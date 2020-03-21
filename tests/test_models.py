@@ -157,12 +157,13 @@ def test_program_movie() -> None:
     assert program.program_id == "17016356"
     assert program.program_type == "movie"
     assert program.title == "Snow Bride"
-    assert program.episode_title == None
+    assert program.episode_title is None
     assert program.rating == "TV-G"
     assert program.start_time == datetime(2010, 7, 5, 15, 0, 8, tzinfo=timezone.utc)
     assert program.duration == 7200
     assert program.position == 4437
     assert program.unique_id is None
+
 
 def test_program_music() -> None:
     """Test the Program model with music channel."""
@@ -181,7 +182,7 @@ def test_program_music() -> None:
     assert program.program_id == "76917562"
     assert program.program_type == "music"
     assert program.title == "Smooth Jazz"
-    assert program.episode_title == None
+    assert program.episode_title is None
     assert program.music_title == "Sparkle In Your Eyes"
     assert program.music_album == "Slam Dunk (2014)"
     assert program.music_artist == "Gerald Albright"
