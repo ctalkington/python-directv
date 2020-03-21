@@ -53,6 +53,7 @@ class Program:
     ondemand: bool
     recorded: bool
     recording: bool
+    viewed: bool
     program_id: int
     program_type: str
     duration: int
@@ -96,6 +97,7 @@ class Program:
             recording=data.get("isRecording", False),
             start_time=start_time,
             unique_id=unique_id,
+            viewed=data.get("isViewed", False),
         )
 
 
