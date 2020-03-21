@@ -1,32 +1,68 @@
 """Tests for DirecTV Models."""
+import pytest
+
+from directv import DIRECTVError
 import directv.models as models
 
-PROGRAM = {
-  "callsign": "FOODHD",
-  "date": "20070324",
-  "duration": 1791,
-  "episodeTitle": "Spaghetti and Clam Sauce",
-  "expiration": "0",
-  "expiryTime": 0,
-  "isOffAir": False,
-  "isPartial": False,
-  "isPclocked": 1,
-  "isPpv": False,
-  "isRecording": False,
-  "isViewed": True,
-  "isVod": False,
-  "keepUntilFull": True,
-  "major": 231,
-  "minor": 65535,
-  "offset": 263,
-  "programId": "4405732",
-  "rating": "No Rating",
-  "recType": 3,
-  "startTime": 1278342008,
-  "stationId": 3900976,
-  "title": "Tyler's Ultimate",
-  "uniqueId": "6728716739474078694"
+DEVICE = {
+    "info": {
+        "accessCardId": "0021-1495-6572",
+        "receiverId": "0288 7745 5858",
+        "stbSoftwareVersion": "0x4ed7",
+        "systemTime": 1281625203,
+        "version": "1.2"
+    },
+    "locations": [
+        {
+            "clientAddr": "0",
+            "locationName": "Host"
+        },
+        {
+           "clientAddr": "2CA17D1CD30X",
+           "locationName": "Client"
+        }
+    ]
 }
+
+PROGRAM = {
+    "callsign": "FOODHD",
+    "date": "20070324",
+    "duration": 1791,
+    "episodeTitle": "Spaghetti and Clam Sauce",
+    "expiration": "0",
+    "expiryTime": 0,
+    "isOffAir": False,
+    "isPartial": False,
+    "isPclocked": 1,
+    "isPpv": False,
+    "isRecording": False,
+    "isViewed": True,
+    "isVod": False,
+    "keepUntilFull": True,
+    "major": 231,
+    "minor": 65535,
+    "offset": 263,
+    "programId": "4405732",
+    "rating": "No Rating",
+    "recType": 3,
+    "startTime": 1278342008,
+    "stationId": 3900976,
+    "title": "Tyler's Ultimate",
+    "uniqueId": "6728716739474078694"
+}
+
+
+def test_device() -> None:
+    """Test the Device model."""
+    device = models.Device(DEVICE)
+    
+    assert device
+
+
+def test_device_no_data() -> None:
+    """Test the Device model."""
+    with pytest.raises(DIRECTVError):
+        device = models.Device({})
 
 
 def test_program() -> None:
