@@ -159,7 +159,7 @@ def test_program_movie() -> None:
     assert program.title == "Snow Bride"
     assert program.episode_title is None
     assert program.rating == "TV-G"
-    assert program.start_time == datetime(2010, 7, 5, 15, 0, 8, tzinfo=timezone.utc)
+    assert program.start_time == datetime(2020, 3, 21, 13, 0, tzinfo=timezone.utc)
     assert program.duration == 7200
     assert program.position == 4437
     assert program.unique_id is None
@@ -187,7 +187,7 @@ def test_program_music() -> None:
     assert program.music_album == "Slam Dunk (2014)"
     assert program.music_artist == "Gerald Albright"
     assert program.rating == "TV-PG"
-    assert program.start_time == datetime(2010, 7, 5, 15, 0, 8, tzinfo=timezone.utc)
+    assert program.start_time == datetime(2020, 3, 21, 10, 0, tzinfo=timezone.utc)
     assert program.duration == 86400
     assert program.position == 15050
     assert program.unique_id is None
