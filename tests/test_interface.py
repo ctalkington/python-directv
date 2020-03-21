@@ -1,7 +1,7 @@
 """Tests for DIRECTV."""
 import pytest
 from aiohttp import ClientSession
-from directv import DIRECTV
+from directv import DIRECTV, DIRECTVError
 from directv.models import Program, State
 
 from . import load_fixture
@@ -81,7 +81,7 @@ async def test_remote(aresponses):
 
 
 @pytest.mark.asyncio
-async def test_remote_invalid_key(aresponses):
+async def test_remote_invalid_key():
     """Test remote with invalid key is handled correctly."""
     async with ClientSession() as session:
         dtv = DIRECTV(HOST, session=session)
