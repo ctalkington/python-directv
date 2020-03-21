@@ -124,17 +124,14 @@ def test_location() -> None:
     """Test the Location model."""
     locations = iter(DEVICE["locations"])
 
-
-    locations = vars(locations[0])
-    location = models.Location.from_dict(locations)
+    location = models.Location.from_dict(vars(locations[0]))
 
     assert location
     assert not location.client
     assert location.name == "Host"
     assert location.address == "0"
 
-    locations = vars(locations[1])
-    location = models.Location.from_dict(locations)
+    location = models.Location.from_dict(vars(locations[0]))
 
     assert location
     assert location.client
