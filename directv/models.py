@@ -32,15 +32,19 @@ class Info:
 class Location:
     """Object holding all information of receiver client location."""
 
+    client: bool
     name: str
     address: str
 
     @staticmethod
     def from_dict(data: dict):
         """Return Info object from DirecTV API response."""
+        address = data.get("clientAddr", "")
+
         return Location(
+            client=address != "0",
             name=data.get("locationName", "Receiver"),
-            address=data.get("clientAddr", ""),
+            address=address,
         )
 
 
@@ -78,8 +82,6 @@ class Program:
         episode_title = data.get("episodeTitle", None)
         music = data.get("music", {})
         music_title = music.get("title", None)
-        music_album = music.get("cd", None)
-        music_artist = music.get("by", None)
         program_type = "movie"
         if episode_title is not None:
             program_type = "tvshow"
@@ -99,8 +101,8 @@ class Program:
             title=data.get("title", None),
             episode_title=episode_title,
             music_title=music_title,
-            music_album=music_album,
-            music_artist=music_artist,
+            music_album=music.get("cd", None),
+            music_artist=music.get("by", None),
             ondemand=data.get("isVod", False),
             partial=data.get("isPartial", False),
             payperview=data.get("isPpv", False),
