@@ -119,6 +119,11 @@ class DIRECTV:
 
         return await response.text()
 
+    @property
+    def device(self) -> Optional[Device]:
+        """Return the cached Device object."""
+        return self._device
+
     async def update(self, full_update: bool = False) -> Device:
         """Get all information about the device in a single call."""
         if self._device is None or full_update:
