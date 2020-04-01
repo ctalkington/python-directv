@@ -196,6 +196,16 @@ class DIRECTV:
             program=program,
         )
 
+    async def status(self, client: str = "0") -> str:
+        """Get basic status of receiver client."""
+        try:
+            mode = await self._request("info/mode", params={"clientAddr": client})
+            return "standby" if mode["mode"] == 1 else "active"
+        except DIRECTVAccessRestricted:
+            return "unauthorized"
+        except DIRECTVError:
+            return "unavailable"
+
     async def tune(self, channel: str, client: str = "0") -> None:
         """Change the channel on the receiver."""
         major, minor = parse_channel_number(channel)
