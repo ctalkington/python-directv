@@ -275,6 +275,90 @@ async def test_state_standby(aresponses):
 
 
 @pytest.mark.asyncio
+async def test_status(aresponses):
+    """Test active state is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/mode",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("info-mode.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.status()
+
+        assert response == "active"
+
+
+@pytest.mark.asyncio
+async def test_status_access_restricted(aresponses):
+    """Test unauthorized state is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/mode",
+        "GET",
+        aresponses.Response(
+            status=403,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("info-mode-restricted.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.status()
+
+        assert response == "unauthorized"
+
+
+@pytest.mark.asyncio
+async def test_status_standby(aresponses):
+    """Test standby status is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/mode",
+        "GET",
+        aresponses.Response(
+            status=200,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("info-mode-standby.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.status()
+
+        assert response == "standby"
+
+
+@pytest.mark.asyncio
+async def test_status_unavailable(aresponses):
+    """Test unavailable status is handled correctly."""
+    aresponses.add(
+        MATCH_HOST,
+        "/info/mode",
+        "GET",
+        aresponses.Response(
+            status=500,
+            headers={"Content-Type": "application/json"},
+            text=load_fixture("info-mode-error.json"),
+        ),
+    )
+
+    async with ClientSession() as session:
+        dtv = DIRECTV(HOST, session=session)
+        response = await dtv.status()
+
+        assert response == "unavailable"
+
+
+@pytest.mark.asyncio
 async def test_tune(aresponses):
     """Test tune is handled correctly."""
     aresponses.add(
